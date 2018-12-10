@@ -4,21 +4,17 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 	
-	<display-name>Hello ICheero</display-name>
+	<display-name>TSO Internal Talk</display-name>
 	
 	<!-- welcome pages -->
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
 	</welcome-file-list>
 	
-	<!-- 加载spring-mybatis容器 -->
-	<!--<context-param>-->
-		<!--<param-name>contextConfigLocation</param-name>-->
-		<!--<param-value>classpath:/config/spring-mybatis.xml</param-value>-->
-	<!--</context-param>-->
-	<!--<listener>-->
-		<!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-	<!--</listener>-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/spring-mvc.xml</param-value>
+	</context-param>
 	
 	<!-- servlet config -->
 	<servlet>
@@ -26,7 +22,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:/config/spring-mvc.xml</param-value>
+			<param-value>classpath:/spring-mvc.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
@@ -57,5 +53,9 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<listener>
+		<listener-class>com.megvii.blockchain.ServerInitListener</listener-class>
+	</listener>
 
 </web-app>

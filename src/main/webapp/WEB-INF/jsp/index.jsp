@@ -1,16 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Work
-  Date: 2018/12/8
-  Time: 5:58 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>TSO Internal Talk</title>
 </head>
 <body>
-    Hello World
+    Blockchain
 </body>
 </html>

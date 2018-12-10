@@ -16,7 +16,7 @@
 	<!-- 配置注解驱动: 就相当于自动替我们配置注解形式的处理器映射器和处理器适配器 -->
 	<mvc:annotation-driven/>
 	<!-- 静态资源处理：css js img -->
-	<mvc:resources mapping="/resources/**" location="../../resources/"/>
+	<mvc:resources mapping="/resources/**" location="../resources/"/>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>

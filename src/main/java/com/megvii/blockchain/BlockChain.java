@@ -47,7 +47,7 @@ public class BlockChain
         BlockHead head = new BlockHead(BLOCK_CHAIN_VERSION, "", Util.getMerkleRoot(transactions), System.currentTimeMillis() + "", "0", "0");
         mRootBlock = new Block(0, head, transactions);
         mBlockChain.add(mRootBlock);
-        System.out.println(String.format(Locale.CHINESE, "BlockChain init!\n\nFirst block #%d has been added!\r\nHash: %s", mRootBlock.getIndex(), mRootBlock.hash()));
+        System.out.println(String.format(Locale.CHINESE, "BlockChain init!\r\nFirst block #%d has been added!\r\nHash: %s", mRootBlock.getIndex(), mRootBlock.hash()));
         return mRootBlock;
     }
 
