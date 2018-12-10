@@ -2,7 +2,6 @@ package com.megvii;
 
 import com.megvii.blockchain.BlockChain;
 import com.megvii.blockchain.entity.Block;
-import com.megvii.steganography.Steganography;
 
 import java.util.Locale;
 
@@ -11,16 +10,10 @@ public class Program
 {
     public static void main(String[] args)
     {
-//        getSteganographyImage();
-
 //        Block block = initBlockChain();
 //        genBlock(5, block);
     }
 
-    private static void getSteganographyImage()
-    {
-        Steganography.getSteganographyImage();
-    }
 
     private static Block initBlockChain()
     {

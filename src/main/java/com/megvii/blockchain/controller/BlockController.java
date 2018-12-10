@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/block")
-public class BlockChainController
+public class BlockController
 {
     List<Transaction> transactions = new ArrayList<>();
 

@@ -13,15 +13,14 @@ import java.util.Locale;
 public class BlockChain
 {
     private static final String BLOCK_CHAIN_VERSION = "0x01";
-    Block mRootBlock;
-    LinkedList<Block> mBlockChain;
+    private Block mRootBlock;
+    private LinkedList<Block> mBlockChain;
 
     private static volatile BlockChain mInstance;
 
     private BlockChain()
     {
         mBlockChain = new LinkedList<>();
-        mRootBlock = new Block();
     }
 
     public static BlockChain getInstance()
@@ -46,16 +45,14 @@ public class BlockChain
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
         BlockHead head = new BlockHead(BLOCK_CHAIN_VERSION, "", Util.getMerkleRoot(transactions), System.currentTimeMillis() + "", "0", "0");
-        mRootBlock.setIndex(0);
-        mRootBlock.setHead(head);
-        mRootBlock.setTransactions(transactions);
+        mRootBlock = new Block(0, head, transactions);
         mBlockChain.add(mRootBlock);
-        System.out.println(String.format(Locale.CHINESE, "Block #%d has been added!\r\nHash: %s", mRootBlock.getIndex(), mRootBlock.hash()));
+        System.out.println(String.format(Locale.CHINESE, "BlockChain init!\n\nFirst block #%d has been added!\r\nHash: %s", mRootBlock.getIndex(), mRootBlock.hash()));
         return mRootBlock;
     }
 
     /**
-     * 对区块头做两次sha256哈希运算，得到的结果如果小于区块头中规定的难度目标，即挖矿成功。
+     * 对区块头做两次sha256哈希运算，得到的结果如果小于区块头中规定的难度目标，即挖矿成功
      */
     @SuppressWarnings("unused")
     public Block getNextBlockByNonce(Block last)

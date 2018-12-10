@@ -18,9 +18,6 @@ public class Block
         this.mTransactionSize = mTransactions != null && mTransactions.size() > 0 ? mTransactions.size() : 0;
     }
 
-    public Block()
-    {}
-
     public int getIndex()
     {
         return index;
@@ -44,23 +41,6 @@ public class Block
     public List<Transaction> getTransactions()
     {
         return mTransactions;
-    }
-
-    public void setIndex(int index)
-    {
-        this.index = index;
-    }
-
-    public void setHead(BlockHead mHead)
-    {
-        this.mHead = mHead;
-    }
-
-    public void setTransactions(List<Transaction> mTransactions)
-    {
-        this.mTransactions = mTransactions;
-        this.mTransactionSize = mTransactions.size();
-
     }
 
     public String hash()

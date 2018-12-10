@@ -12,6 +12,11 @@ public class Steganography // [,stegə'nɔgrəfi]
     private static String mInputFilePath = System.getProperty("user.dir") + "/src/data/lenna.png";
     private static String mOutputFilePath = System.getProperty("user.dir") + "/src/data/lenna_red.png";
 
+    public static void main(String[] args)
+    {
+        getSteganographyImage();
+    }
+
     public static void getSteganographyImage()
     {
         File file = new File(mInputFilePath);
