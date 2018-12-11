@@ -1,5 +1,7 @@
 package com.megvii.blockchain.entity;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -46,10 +48,14 @@ public class Block
         return mTransactions;
     }
 
-    public String hash()
+    @Override
+    public String toString()
     {
-        return mHead.toSHA256String();
+        return mHead.toString();
     }
 
-
+    public String toJsonString()
+    {
+        return new JSONObject(this).toString();
+    }
 }

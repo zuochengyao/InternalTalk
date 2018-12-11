@@ -36,10 +36,6 @@ public class Transaction
     @Override
     public String toString()
     {
-        JSONObject json = new JSONObject();
-        json.append("from", this.from);
-        json.append("to", this.to);
-        json.append("amount", this.amount);
-        return json.toString();
+        return  new JSONObject(this).toString();
     }
 }

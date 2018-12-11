@@ -2,6 +2,8 @@ package com.megvii.blockchain.entity;
 
 import com.megvii.blockchain.Util;
 
+import org.json.JSONObject;
+
 /**
  * 区块头
  */
@@ -80,11 +82,6 @@ public class BlockHead
     @Override
     public String toString()
     {
-        return version + previousBlockHash + merkleRoot + time + targetBits + nonce;
-    }
-
-    public String toSHA256String()
-    {
         return Util.SHA256(version + previousBlockHash + merkleRoot + time + targetBits + nonce);
     }
 
@@ -97,4 +94,9 @@ public class BlockHead
         return version + previousBlockHash + merkleRoot + time + targetBits;
     }
 
+    public String toJsonString()
+    {
+        JSONObject json = new JSONObject(this);
+        return json.toString();
+    }
 }

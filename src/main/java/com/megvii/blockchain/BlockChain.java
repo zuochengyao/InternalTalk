@@ -5,6 +5,7 @@ import com.megvii.blockchain.entity.BlockHead;
 import com.megvii.blockchain.entity.Transaction;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class BlockChain
@@ -13,9 +14,7 @@ public class BlockChain
     private static final String BLOCK_CHAIN_VERSION = "0x01";
     private static final String COIN_BASE = "CoinBase";
 
-    private Block mRootBlock;
     private ArrayList<Block> mBlockChain;
-    // TODO 交易记录处理
     private ArrayList<Transaction> mTransactions;
 
     private int mTarget;
@@ -54,7 +53,7 @@ public class BlockChain
     void init()
     {
         System.out.println("BlockChain init!\nReady to create the ROOT block!");
-        mRootBlock = newBlock(Util.MD5(LOCALHOST_ADDR));
+        Block mRootBlock = newBlock(Util.MD5(LOCALHOST_ADDR));
         int nonce = 0;
         while (!Util.isPoWNonce(mRootBlock.getHead().toPowString(), nonce))
             nonce++;
@@ -121,12 +120,13 @@ public class BlockChain
      */
     private Block newBlock(String toAddr)
     {
-        Block last = getLastBlock();
         // 区块奖励 交易记录
         newTransaction(COIN_BASE, toAddr, 10);
+        List<Transaction> transactions = new ArrayList<>(mTransactions);
+        Block last = getLastBlock();
         // 创建区块头
-        BlockHead head = new BlockHead(BLOCK_CHAIN_VERSION, last != null ? last.hash() : "", Util.getMerkleRoot(mTransactions), System.currentTimeMillis() + "", mTarget);
-        return new Block(last != null ? last.getIndex() + 1 : 0, head, mTransactions);
+        BlockHead head = new BlockHead(BLOCK_CHAIN_VERSION, last != null ? last.toString() : "", Util.getMerkleRoot(transactions), System.currentTimeMillis() + "", mTarget);
+        return new Block(last != null ? last.getIndex() + 1 : 0, head, transactions);
     }
 
     /**
@@ -140,7 +140,13 @@ public class BlockChain
         // 更新目标值
         mTarget++;
         // 清空当前交易记录
-        mTransactions.clear();
-        System.out.println(String.format(Locale.CHINESE, "Block #%d has been added!\r\nHash: %s", block.getIndex(), block.hash()));
+        mTransactions.removeAll(block.getTransactions());
+        System.out.println(String.format(Locale.CHINESE, "Block #%d has been added!\r\nHash: %s", block.getIndex(), block.toString()));
+        pushBlockChainToAll();
+    }
+
+    private void pushBlockChainToAll()
+    {
+        // TODO 将新产生的区块推送给所有节点
     }
 }

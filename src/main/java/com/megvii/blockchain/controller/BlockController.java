@@ -65,9 +65,8 @@ public class BlockController
     {
         String host = request.getRemoteHost();
         int port = request.getRemotePort();
-
         Block block = BlockChain.getInstance().getNextBlockByPOW(host, port);
-        return block.hash();
+        return block.toJsonString();
     }
 
 }
