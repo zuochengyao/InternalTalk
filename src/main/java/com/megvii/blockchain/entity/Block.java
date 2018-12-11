@@ -2,6 +2,9 @@ package com.megvii.blockchain.entity;
 
 import java.util.List;
 
+/**
+ * 完整区块
+ */
 public class Block
 {
     private int index;
@@ -45,6 +48,8 @@ public class Block
 
     public String hash()
     {
-        return mHead.toString();
+        return mHead.toSHA256String();
     }
+
+
 }

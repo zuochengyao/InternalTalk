@@ -10,7 +10,7 @@ public class ServerInitListener extends ContextLoaderListener
     public void contextInitialized(ServletContextEvent event)
     {
         super.contextInitialized(event);
-        BlockChain.getInstance().init();
+        new Thread(() -> BlockChain.getInstance().init()).start();
     }
 
     @Override

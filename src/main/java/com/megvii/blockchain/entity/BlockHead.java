@@ -24,23 +24,22 @@ public class BlockHead
      * 目标值 = 最大目标值 （0x00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF） / 难度系数（https://btc.com/stats/diff）
      * 与挖矿难度有关，一个区块头的SHA256值必定要小于或等于目标HASH值，该区块才能被网络所接受，目标HASH越低，产生一个新区块的难度越大。
      */
-    private String targetBits;
+    private int targetBits;
 
     /**
      * 是一个32位的二进制值，即最大可以到21.47亿。
      * 当前区块的哈希由区块头唯一决定。如果要对同一个区块反复计算哈希，就意味着，区块头必须不停地变化，否则不可能算出不一样的哈希。
      * 区块头里面所有的特征值都是固定的，为了让区块头产生变化，中本聪故意增加了一个随机项，矿工的作用其实就是猜出 Nonce 的值，使得区块头的哈希可以小于目标值，从而能够写入区块链
      */
-    private String nonce;
+    private int nonce;
 
-    public BlockHead(String version, String previousBlockHash, String merkleRoot, String time, String targetBits, String nonce)
+    public BlockHead(String version, String previousBlockHash, String merkleRoot, String time, int targetBits)
     {
         this.version = version;
         this.previousBlockHash = previousBlockHash;
         this.merkleRoot = merkleRoot;
         this.time = time;
         this.targetBits = targetBits;
-        this.nonce = nonce;
     }
 
     public String getVersion()
@@ -63,19 +62,39 @@ public class BlockHead
         return time;
     }
 
-    public String getTargetBits()
+    public int getTargetBits()
     {
         return targetBits;
     }
 
-    public String getNonce()
+    public int getNonce()
     {
         return nonce;
+    }
+
+    public void setNonce(int nonce)
+    {
+        this.nonce = nonce;
     }
 
     @Override
     public String toString()
     {
+        return version + previousBlockHash + merkleRoot + time + targetBits + nonce;
+    }
+
+    public String toSHA256String()
+    {
         return Util.SHA256(version + previousBlockHash + merkleRoot + time + targetBits + nonce);
     }
+
+    /**
+     * 获取工作量证明时 用到的拼接串
+     * @return
+     */
+    public String toPowString()
+    {
+        return version + previousBlockHash + merkleRoot + time + targetBits;
+    }
+
 }
