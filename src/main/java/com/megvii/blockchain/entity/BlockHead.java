@@ -1,6 +1,6 @@
 package com.megvii.blockchain.entity;
 
-import com.megvii.blockchain.Util;
+import com.megvii.Util;
 
 import org.json.JSONObject;
 
@@ -13,7 +13,7 @@ public class BlockHead
     /** 版本号：无需关心 */
     private String version;
 
-    /** 前一区块的哈希值：SHA256(head = version + previous_block_hash + merkle_root + time + target_bits + nonce) */
+    /** 前一区块的哈希值：SHA256(head); head = version + previous_block_hash + merkle_root + time + target_bits + nonce */
     private String previousBlockHash;
 
     /** 默克尔根：默克尔树（Merkle Tree）算法生成，并不是直接计算整个字符串的Hash值，而是每个交易都计算一个Hash值，然后两两连接再次计算Hash，一直到最顶层的Merkle根 */

@@ -1,5 +1,6 @@
 package com.megvii.blockchain;
 
+import com.megvii.Util;
 import com.megvii.blockchain.entity.Block;
 import com.megvii.blockchain.entity.BlockHead;
 import com.megvii.blockchain.entity.Transaction;
@@ -50,14 +51,18 @@ public class BlockChain
      * 初始化区块链
      * 实际就是创建一个 创世区块
      */
-    void init()
+    void init(boolean rule)
     {
         System.out.println("BlockChain init!\nReady to create the ROOT block!");
         Block mRootBlock = newBlock(Util.MD5(LOCALHOST_ADDR));
         int nonce = 0;
-        while (!Util.isPoWNonce(mRootBlock.getHead().toPowString(), nonce))
-            nonce++;
-        // 创建区块头
+        if (rule)
+        {
+            while (!Util.isPoWNonce(mRootBlock.getHead().toPowString(), nonce))
+                nonce++;
+        }
+        else
+            nonce = Util.getRandomNonce();
         ensureBlock(mRootBlock, nonce);
     }
 
@@ -77,7 +82,10 @@ public class BlockChain
             Integer sha256 = new Integer(Util.SHA256(Util.SHA256(headStr)));
             // 计算的sha256值 <= 目标值 表示找到新的区块
             if (sha256.compareTo(mTarget) <= 0)
+            {
                 ensureBlock(block, nonce);
+                break;
+            }
         }
         return block;
     }
@@ -105,13 +113,14 @@ public class BlockChain
         int nonce = Util.getRandomNonce();
         System.out.println(String.format(Locale.CHINESE, "Nonce %d has been found! MD5 : %s", nonce, Util.MD5(nonce + "")));
         Block block = newBlock(Util.MD5(host + port));
-        ensureBlock(block, Util.getRandomNonce());
+        ensureBlock(block, nonce);
     }
 
     public void newTransaction(String from, String to, int amount)
     {
         Transaction transaction = new Transaction(from, to, amount);
         mTransactions.add(transaction);
+        System.out.println(String.format("Create a transaction: %s", transaction.toString()));
     }
 
     /**

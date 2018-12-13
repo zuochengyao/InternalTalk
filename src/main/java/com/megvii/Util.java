@@ -1,9 +1,10 @@
-package com.megvii.blockchain;
+package com.megvii;
 
 import com.megvii.blockchain.entity.Transaction;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -38,7 +39,7 @@ public class Util
         return strResult;
     }
 
-    static String MD5(String str)
+    public static String MD5(String str)
     {
         String md5 = null;
         try
@@ -72,13 +73,13 @@ public class Util
      * 伪代码 获取默克尔根
      * @param list 交易记录
      */
-    static String getMerkleRoot(List<Transaction> list)
+    public static String getMerkleRoot(List<Transaction> list)
     {
         String str = list != null && list.size() > 0 ? list.toString() : "NullMerkleRoot";
         return SHA256(str);
     }
 
-    static int getRandomNonce()
+    public static int getRandomNonce()
     {
         Random random = new Random();
         return random.nextInt((int) Math.pow(2, 32));
@@ -87,11 +88,16 @@ public class Util
     /**
      * 找到一个自然数nonce，使得md5(当天日期+你的用户名+当前的票数+x)的前6位都是0
      */
-    static boolean isPoWNonce(String str, int nonce)
+    public static boolean isPoWNonce(String str, int nonce)
     {
         String md5 = MD5(str + nonce);
         if (md5.startsWith("000000"))
             System.out.println(String.format(Locale.CHINESE, "Nonce %d has been found! MD5 : %s", nonce, md5));
         return md5.startsWith("000000");
+    }
+
+    public static String base64Decode(String s)
+    {
+        return new String(Base64.getDecoder().decode(s));
     }
 }

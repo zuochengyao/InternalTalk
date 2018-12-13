@@ -10,11 +10,13 @@ import javax.imageio.ImageIO;
 public class Steganography // [,stegə'nɔgrəfi]
 {
     private static String mInputFilePath = System.getProperty("user.dir") + "/src/data/lenna.png";
-    private static String mOutputFilePath = System.getProperty("user.dir") + "/src/data/lenna_red.png";
+    private static String mOutputFilePath = System.getProperty("user.dir") + "/src/data/lenna_green.png";
 
     public static void main(String[] args)
     {
-        getSteganographyImage();
+//        String base64 = "ZmxhZ3t3ZWxjb21lX3RvX3hpYW56aGl9";
+//        System.out.println(Util.base64Decode(base64));
+         getSteganographyImage();
     }
 
     public static void getSteganographyImage()
@@ -32,7 +34,7 @@ public class Steganography // [,stegə'nɔgrəfi]
                     {
                         // 获取每个像素点的RGB颜色
                         Color color = new Color(image.getRGB(w, h));
-                        int lsb = color.getRed() & 1;
+                        int lsb = color.getGreen() & 1;
                         image.setRGB(w, h, ((lsb == 0) ? new Color(0, 0, 0) : new Color(255, 255, 255)).getRGB());
                     }
                 }
